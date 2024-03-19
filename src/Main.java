@@ -9,12 +9,56 @@ public class Main {
 
         PesquisarExibir pesquisaCliente = new PesquisarExibir(database);
 
-        // Input de usuário para pesquisar CPF
-        Scanner pes = new Scanner(System.in);
-        System.out.println("Pesquisar CPF: ");
-        String cpf = pes.nextLine();
+        Scanner add = new Scanner(System.in);
 
-        // Pesquisa
-        pesquisaCliente.pesquisarExibir(cpf);
+        // Adicionar novos Clientes em toda
+        // nova execução não é necessário,
+        // visto que esses já são armazenados
+        // em um arquivo de acordo com execuções
+        // anteriores.
+        System.out.println("Esse sistema armazena clientes previamente cadastrados.");
+        while (true) {
+            // Capturar informação,
+            // adicionar informação em um vetor,
+            // separar informação em variáveis,
+            // adicionar cliente através das variáveis.
+            System.out.println("Insira informações separadas por vírgula na ordem (nome, CPF, celular, e-mail). Digite 'sair' para sair ou 'pesquisa' para pesquisar.");
+            String info = add.nextLine();
+
+            if (info.equalsIgnoreCase("sair")) {
+                break;
+            }
+
+            if (info.equalsIgnoreCase("pesquisa")) {
+                // Input de usuário para pesquisar CPF
+                Scanner pes = new Scanner(System.in);
+                System.out.println("Pesquisar CPF: ");
+                String cpf = pes.nextLine();
+                pes.close();
+
+                // Pesquisa
+                pesquisaCliente.pesquisarExibir(cpf);
+                break;
+            }
+
+            String[] vetor = info.split(",");
+            if (vetor.length != 4) {
+                System.out.println("Formato inválido.");
+                continue;
+            }
+
+            try {
+                String nome = vetor[0].trim();
+                String cpf = vetor[1].trim();
+                String celular = vetor[2].trim();
+                String email = vetor[3].trim();
+
+                database.addCliente(new Cliente(nome, cpf, celular, email));
+                System.out.println("Cliente adicionado.");
+            } catch (NumberFormatException e) {
+                System.out.println("Formato inválido.");
+            }
+        }
+
     }
 }
