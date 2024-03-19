@@ -1,3 +1,6 @@
+// Essa classe tem a função de
+// pesquisar e exibir clientes de acordo com seu CPF.
+
 public class PesquisarExibir {
     private ClienteDatabase pesquisa;
 
